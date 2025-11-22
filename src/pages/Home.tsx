@@ -20,17 +20,24 @@ export default function Home() {
     refetchInterval: 10 * 60 * 1000, // Refetch every 10 minutes
   });
 
-  // Scroll to item if hash is present
+  // Scroll to item if hash is present (handle both #item-id and #item-id+expand)
   useEffect(() => {
     if (window.location.hash) {
-      const element = document.querySelector(window.location.hash);
+      const hash = window.location.hash.replace('#', '');
+      const itemId = hash.replace('+expand', '');
+      const element = document.getElementById(itemId);
+      
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          element.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
-          setTimeout(() => {
-            element.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
-          }, 2000);
+          
+          // Only add ring if not expanding (modal will handle focus)
+          if (!hash.includes('+expand')) {
+            element.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+            setTimeout(() => {
+              element.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+            }, 2000);
+          }
         }, 100);
       }
     }

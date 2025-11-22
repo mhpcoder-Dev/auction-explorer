@@ -18,6 +18,8 @@ export interface AuctionItem {
   isActive: boolean;
   isFuture: boolean;
   imageUrl?: string;
+  licenseId?: string;
+  fetchedAt: string;
   createdAt: string;
 }
 
