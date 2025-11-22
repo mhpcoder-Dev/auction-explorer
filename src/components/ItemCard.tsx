@@ -1,6 +1,5 @@
 import { AuctionItem } from '@/types/auction';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Calendar, MessageSquare } from 'lucide-react';
 import { getAssetTypeLabel } from '@/lib/assetClassifier';
@@ -81,12 +80,13 @@ export default function ItemCard({ item }: ItemCardProps) {
   };
 
   const licenseHint = getLicenseHint();
+  const primaryImage = item.images?.[0] || item.imageUrl;
 
   return (
     <>
       <Card 
         id={`item-${item.id}`}
-        className="scroll-mt-24 shadow-card hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+        className="scroll-mt-24 shadow-card hover:shadow-lg transition-shadow duration-300 cursor-pointer flex flex-col h-full"
         onClick={() => setShowModal(true)}
         role="button"
         tabIndex={0}
@@ -96,13 +96,14 @@ export default function ItemCard({ item }: ItemCardProps) {
             setShowModal(true);
           }
         }}
+        aria-label={`View details for ${item.title}`}
       >
-        <article>
+        <article className="flex flex-col h-full">
           {/* Image */}
-          {item.imageUrl && (
+          {primaryImage && (
             <div className="relative aspect-video w-full overflow-hidden rounded-t-lg bg-muted">
               <img
-                src={item.imageUrl}
+                src={primaryImage}
                 alt={item.title}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 loading="lazy"
@@ -110,7 +111,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             </div>
           )}
 
-          <CardHeader>
+          <CardHeader className="flex-grow">
             <div className="flex items-start gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
@@ -122,9 +123,9 @@ export default function ItemCard({ item }: ItemCardProps) {
                   )}
                 </div>
                 
-                <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
+                <CardTitle className="text-xl mb-2 line-clamp-2">{item.title}</CardTitle>
                 
-                <CardDescription className="text-base">
+                <CardDescription className="text-base line-clamp-3">
                   {item.shortDescription}
                 </CardDescription>
               </div>
@@ -135,13 +136,13 @@ export default function ItemCard({ item }: ItemCardProps) {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4 flex-shrink-0" />
-                <span>{item.location}</span>
+                <span className="truncate">{item.location}</span>
               </div>
               
               {(item.auctionStartDate || item.auctionEndDate) && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Calendar className="h-4 w-4 flex-shrink-0" />
-                  <span>
+                  <span className="text-xs">
                     {item.auctionStartDate && `Starts: ${formatDate(item.auctionStartDate)}`}
                     {item.auctionStartDate && item.auctionEndDate && ' • '}
                     {item.auctionEndDate && `Ends: ${formatDate(item.auctionEndDate)}`}
@@ -152,18 +153,20 @@ export default function ItemCard({ item }: ItemCardProps) {
 
             {/* Attribution Hint */}
             {licenseHint && (
-              <p className="text-xs text-muted-foreground italic">
+              <p className="text-xs text-muted-foreground italic truncate">
                 {licenseHint}
               </p>
             )}
           </CardContent>
 
-          <CardFooter className="flex items-center gap-3">
+          <CardFooter className="flex items-center gap-3 mt-auto">
             {/* Comment Count Badge */}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <MessageSquare className="h-4 w-4" />
-              <span>{commentCount} {commentCount === 1 ? 'comment' : 'comments'}</span>
-            </div>
+            {commentCount > 0 && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MessageSquare className="h-4 w-4" />
+                <span>{commentCount} {commentCount === 1 ? 'comment' : 'comments'}</span>
+              </div>
+            )}
           </CardFooter>
         </article>
       </Card>

@@ -17,7 +17,8 @@ export interface AuctionItem {
   sourceName: string;
   isActive: boolean;
   isFuture: boolean;
-  imageUrl?: string;
+  images: string[];
+  imageUrl?: string; // Alias to first image for backward compatibility
   licenseId?: string;
   fetchedAt: string;
   createdAt: string;

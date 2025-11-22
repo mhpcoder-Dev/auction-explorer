@@ -2,11 +2,12 @@ import { AuctionItem } from '@/types/auction';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MapPin, Calendar, Share2, Clock } from 'lucide-react';
+import { MapPin, Calendar, Share2, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAssetTypeLabel } from '@/lib/assetClassifier';
 import { toast } from 'sonner';
 import CommentThread from './CommentThread';
 import { DATA_SOURCES } from '@/lib/dataFetcher';
+import { useState } from 'react';
 
 interface ItemModalProps {
   item: AuctionItem;
@@ -15,6 +16,9 @@ interface ItemModalProps {
 }
 
 export default function ItemModal({ item, open, onOpenChange }: ItemModalProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = item.images || (item.imageUrl ? [item.imageUrl] : []);
+  
   const handleShare = () => {
     const url = `${window.location.origin}${window.location.pathname}#item-${item.id}+expand`;
     navigator.clipboard.writeText(url);
@@ -35,6 +39,14 @@ export default function ItemModal({ item, open, onOpenChange }: ItemModalProps) 
   const getLicenseInfo = () => {
     const source = DATA_SOURCES.find(s => s.id === item.licenseId);
     return source?.attribution;
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
   const licenseInfo = getLicenseInfo();
@@ -58,15 +70,69 @@ export default function ItemModal({ item, open, onOpenChange }: ItemModalProps) 
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Large Image */}
-          {item.imageUrl && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
+          {/* Image Carousel */}
+          {images.length > 0 && (
+            <div className="space-y-4">
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
+                <img
+                  src={images[currentImageIndex]}
+                  alt={`${item.title} - Image ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                
+                {images.length > 1 && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
+                      onClick={prevImage}
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
+                      onClick={nextImage}
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                    
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-background/80 px-3 py-1 rounded-full text-sm">
+                      {currentImageIndex + 1} / {images.length}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Thumbnail Navigation */}
+              {images.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-all ${
+                        idx === currentImageIndex 
+                          ? 'border-primary ring-2 ring-primary/20' 
+                          : 'border-border hover:border-primary/50'
+                      }`}
+                      aria-label={`View image ${idx + 1}`}
+                    >
+                      <img
+                        src={img}
+                        alt={`${item.title} thumbnail ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -107,14 +173,9 @@ export default function ItemModal({ item, open, onOpenChange }: ItemModalProps) 
                 {licenseInfo.text}
               </p>
               <div className="flex gap-2 text-xs">
-                <a
-                  href={licenseInfo.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  {licenseInfo.license}
-                </a>
+                <span className="text-muted-foreground">
+                  {licenseInfo.license} • {licenseInfo.link}
+                </span>
               </div>
             </div>
           )}

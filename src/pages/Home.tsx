@@ -180,13 +180,13 @@ export default function Home() {
                         {/* In-feed ad every 3 items in first location group */}
                         {index === 0 && items.length > 2 && (
                           <div>
-                            <div className="grid gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                               {items.slice(0, 3).map((item) => (
                                 <ItemCard key={item.id} item={item} />
                               ))}
                             </div>
                             <AdSlot id={`ad-feed-${country}`} position="in-feed" className="my-4" />
-                            <div className="grid gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                               {items.slice(3).map((item) => (
                                 <ItemCard key={item.id} item={item} />
                               ))}
@@ -195,7 +195,7 @@ export default function Home() {
                         )}
 
                         {(index !== 0 || items.length <= 2) && (
-                          <div className="grid gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {items.map((item) => (
                               <ItemCard key={item.id} item={item} />
                             ))}

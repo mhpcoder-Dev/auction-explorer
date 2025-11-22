@@ -61,6 +61,11 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'GSA Auctions',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
     licenseId: 'us-public-domain',
     fetchedAt: now.toISOString(),
@@ -83,6 +88,10 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'GSA Auctions',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&h=600&fit=crop',
     licenseId: 'us-public-domain',
     fetchedAt: now.toISOString(),
@@ -105,6 +114,9 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'GSA Auctions',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&h=600&fit=crop',
     licenseId: 'us-public-domain',
     fetchedAt: now.toISOString(),
@@ -127,6 +139,10 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'GSA Auctions',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&h=600&fit=crop',
     licenseId: 'us-public-domain',
     fetchedAt: now.toISOString(),
@@ -149,6 +165,10 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'UK Register of Surplus Land',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop',
     licenseId: 'uk-ogl',
     fetchedAt: now.toISOString(),
@@ -170,6 +190,9 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'UK Register of Surplus Land',
     isActive: true,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=600&fit=crop',
     licenseId: 'uk-ogl',
     fetchedAt: now.toISOString(),
@@ -191,6 +214,9 @@ function generateMockItems(): AuctionItem[] {
     sourceName: 'GCSurplus Historical Sold Items',
     isActive: false,
     isFuture: false,
+    images: [
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop'
+    ],
     imageUrl: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop',
     licenseId: 'canada-ogl',
     fetchedAt: now.toISOString(),
