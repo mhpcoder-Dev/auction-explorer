@@ -8,8 +8,8 @@ export default function Navigation() {
   const navItems = [
     { path: '/', label: 'Active Listings' },
     { path: '/future', label: 'Future Items' },
-    { path: '/attributions', label: 'Attributions' },
-    { path: '/status', label: 'Status' },
+    // { path: '/attributions', label: 'Attributions' },
+    // { path: '/status', label: 'Status' },
   ];
 
   return (
